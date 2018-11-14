@@ -1,27 +1,58 @@
-// Creates an array that lists out all of the possible options.
-var options = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-    
-// Creating variables to hold the number of wins, losses, and guesses. They start at 0.
+var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+
+
 var wins = 0;
 var losses = 0;
-var guesses = 9;
+var guessesLeft = 9;
+var lettersGuessed = [];
+var computerGuess = [];
 
-// This function is run whenever the user presses a key.
-document.onkeyup = function() {
-// Randomly chooses a choice from the options array. This is the Computer's guess.    
-    var computerGuess = options[Math.floor(Math.random()*options.length)]; 
-    document.getElementById("my_id").textContent = "Wins" + wins + "Losses" + losses + "Guesses Left" + guesses;
-// Determines which key was pressed by User.
-    var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
-    
-    
-    if (userGuess== for (var i = 0; i < options.length; i++) {
-        if ((userGuess== 'a') && (computerGuess== 'a')) {
-        wins++;
-        }
-        if ((userGuess== 'a') && (computerGuess== for (var i = 1; i < options.length; i++))) {
-        wins++;
-        }
-    }
-}    
+
+window.onload = function() {
+	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+	computerGuess.push(compGuess);
+	console.log(computerGuess[0]);
+}
+
+
+
+document.onkeyup = function(event) {
+	var playerGuess = event.key;
+	lettersGuessed.push(playerGuess);
+	console.log(computerGuess[0]);
+
+if ((playerGuess === computerGuess[0]) && (guessesLeft > 0)) {
+	wins++;
+	guessesLeft = 9;
+	lettersGuessed.length = 0;
+	computerGuess.length = 0;
+	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+	computerGuess.push(compGuess);
+	console.log(computerGuess[0]);
+}
+
+else if ((playerGuess !== computerGuess[0]) && (guessesLeft > 0)) {
+	guessesLeft = guessesLeft-1;
+}
+
+else {
+	losses++;
+	guessesLeft = 9;
+	lettersGuessed.length = 0;
+	computerGuess.length = 0;
+	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+	computerGuess.push(compGuess);
+	console.log(computerGuess[0]);
+}
+
+var html = "<p>Guess what letter I'm thinking of!</p>" +
+          "<p>Wins: " + wins + "</p>" +
+          "<p>Losses: " + losses + "</p>" +
+          "<p>Guesses left: " + guessesLeft + "</p>" +
+          "<p>Your guesses so far: " + lettersGuessed + "</p>";
+ 
+document.querySelector("#game").innerHTML = html;
+
+}
